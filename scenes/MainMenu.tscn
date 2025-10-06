@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://h2p8mx5n8g83"]
+
+[ext_resource type="Script" uid="uid://corysb1oarkjn" path="res://scripts/main_menu.gd" id="1_0ykhv"]
+[ext_resource type="Texture2D" uid="uid://b8bewsy1ijoag" path="res://assets/pongImage.png" id="2_2wh52"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0ykhv")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.94902, 1)
+theme_override_font_sizes/font_size = 61
+text = "PONG
+"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "JOGAR"
+
+[node name="DifficultySelect" type="OptionButton" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "Fácil"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Difícil"
+popup/item_2/id = 2
+
+[node name="Button2" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAIR"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -126.0
+offset_top = -36.0
+offset_right = 258.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_2wh52")
+stretch_mode = 6
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button2" to="." method="_on_quit_pressed"]

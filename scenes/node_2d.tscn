@@ -1,0 +1,145 @@
+[gd_scene load_steps=11 format=3 uid="uid://daiccrbexaxfq"]
+
+[ext_resource type="Script" uid="uid://dsoqvrhi2moam" path="res://scripts/player1_controller.gd" id="1_j7wrs"]
+[ext_resource type="Texture2D" uid="uid://ghv2u72jhss5" path="res://assets/player1.png" id="2_fws66"]
+[ext_resource type="Script" uid="uid://bik43h8ysljfx" path="res://scripts/player2_controller.gd" id="3_hh0fu"]
+[ext_resource type="Texture2D" uid="uid://qsioh7nohu3a" path="res://assets/player2.png" id="4_3m5ht"]
+[ext_resource type="Script" uid="uid://u0donyw6j7j2" path="res://scripts/ball_controller.gd" id="5_dubn7"]
+[ext_resource type="Texture2D" uid="uid://sfdiujx6kn33" path="res://assets/ball.png" id="6_08kqv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0e48y"]
+size = Vector2(20, 119)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0hol4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hol4"]
+size = Vector2(1144, 80)
+
+[sub_resource type="FontFile" id="FontFile_kdubu"]
+cache/0/79/0/ascent = 0.0
+cache/0/79/0/descent = 0.0
+cache/0/79/0/underline_position = 0.0
+cache/0/79/0/underline_thickness = 0.0
+cache/0/79/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(71, 120)
+script = ExtResource("1_j7wrs")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("2_fws66")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Player 2" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ball")]
+position = Vector2(500, 120)
+script = ExtResource("3_hh0fu")
+ball = NodePath("../Ball")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player 2"]
+texture = ExtResource("4_3m5ht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player 2"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_0e48y")
+
+[node name="Ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("player1_label", "player2_label", "game_over_label", "game_over_panel")]
+position = Vector2(640, 360)
+gravity_scale = 0.0
+script = ExtResource("5_dubn7")
+player1_label = NodePath("../Points1")
+player2_label = NodePath("../Points2")
+game_over_label = NodePath("../GameOverUI/CenterContainer/VBoxContainer/WinText")
+game_over_panel = NodePath("../GameOverUI")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_0hol4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+texture = ExtResource("6_08kqv")
+
+[node name="Area2D" type="RigidBody2D" parent="."]
+position = Vector2(13, -10)
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(562, -30)
+shape = SubResource("RectangleShape2D_0hol4")
+
+[node name="Area2D2" type="RigidBody2D" parent="."]
+position = Vector2(17, 720)
+gravity_scale = 0.0
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(562, -30)
+shape = SubResource("RectangleShape2D_0hol4")
+
+[node name="Points2" type="Label" parent="."]
+offset_right = 89.0
+offset_bottom = 23.0
+text = "PLAYER 1: 0"
+
+[node name="Points1" type="Label" parent="."]
+offset_left = 1060.0
+offset_top = 2.0
+offset_right = 1149.0
+offset_bottom = 25.0
+text = "PLAYER 2: 0"
+
+[node name="GameOverUI" type="CanvasLayer" parent="."]
+process_mode = 2
+layer = 10
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOverUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="WinText" type="Label" parent="GameOverUI/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.501961)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = SubResource("FontFile_kdubu")
+theme_override_font_sizes/font_size = 79
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameOverUI/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="GameOverUI/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="MenuButton" type="Button" parent="GameOverUI/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Menu"
